@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XO_Classes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XO_Demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BoardGame_Classes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XO_Classes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="html\annotated.html" />
+    <None Include="html\classes.html" />
+    <None Include="html\class_board-members.html" />
+    <None Include="html\class_board.html" />
+    <None Include="html\class_game_manager-members.html" />
+    <None Include="html\class_game_manager.html" />
+    <None Include="html\class_move-members.html" />
+    <None Include="html\class_move.html" />
+    <None Include="html\class_player-members.html" />
+    <None Include="html\class_player.html" />
+    <None Include="html\class_u_i-members.html" />
+    <None Include="html\class_u_i.html" />
+    <None Include="html\class_x_o___u_i-members.html" />
+    <None Include="html\class_x_o___u_i.html" />
+    <None Include="html\class_x___o___board-members.html" />
+    <None Include="html\class_x___o___board.html" />
+    <None Include="html\doxygen_crawl.html" />
+    <None Include="html\files.html" />
+    <None Include="html\functions.html" />
+    <None Include="html\functions_func.html" />
+    <None Include="html\functions_vars.html" />
+    <None Include="html\globals.html" />
+    <None Include="html\globals_func.html" />
+    <None Include="html\hierarchy.html" />
+    <None Include="html\index.html" />
+    <None Include="html\_board_game___classes_8h_source.html" />
+    <None Include="html\_x_o___classes_8h.html" />
+    <None Include="html\_x_o___classes_8h_source.html" />
+    <None Include="html\_x_o___demo_8cpp.html" />
+  </ItemGroup>
+</Project>
