@@ -64,7 +64,25 @@ int main() {
             delete[] players;
         }
         else if (choice == 4) {
-        
+            cout << "=== Word Tic -Tac -Toe ===" << endl;
+            WordTTT_Board* board = new WordTTT_Board();
+            WordTTT_UI* ui = new WordTTT_UI();
+            string name1, name2;
+            cout << "Enter Player 1 name: ";
+            cin >> name1;
+            cout << "Enter Player 2 name: ";
+            cin >> name2;
+            Player<char>* players[2];
+            players[0] = new Player<char>(name1, 'A', PlayerType::HUMAN);
+            players[1] = new Player<char>(name2, 'B', PlayerType::HUMAN);
+            players[0]->set_board_ptr(board);
+            players[1]->set_board_ptr(board);
+            GameManager<char> gameManager(board, players, ui);
+            gameManager.run();
+            delete board;
+            delete ui;
+            delete players[0];
+            delete players[1]; 
         }
         else if (choice == 5) {
             MisereTTT_UI ui;
@@ -157,6 +175,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
