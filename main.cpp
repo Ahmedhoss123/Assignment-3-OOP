@@ -8,6 +8,9 @@
 #include "NumTTT_Classes.h"
 #include "TTC5_Board.h"
 #include "TTC5_UI.h"
+#include "FourByFourBoard.h"
+#include "FourByFourUI.h"
+
 
 using namespace std;
 
@@ -77,8 +80,23 @@ int main() {
             delete[] players;
         }
         else if (choice == 7) {
-            
-        }
+          cout << "=== 4x4 Moving Tic Tac Toe ===" << endl;
+
+          FourByFourBoard* board = new FourByFourBoard();
+          FourByFourUI* ui = new FourByFourUI();
+
+          Player<char>** players = ui->setup_players();
+
+          GameManager<char> gameManager(board, players, ui);
+          gameManager.run();
+
+    delete board;
+    delete ui;
+    delete players[0];
+    delete players[1];
+    delete[] players;
+}
+
         else if (choice == 8) {
             
         }
@@ -121,5 +139,6 @@ int main() {
 
     return 0;
 }
+
 
 
