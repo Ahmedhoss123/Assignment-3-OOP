@@ -6,6 +6,8 @@
 #include "DiamondTTT_Board.h"
 #include "DiamondTTT_UI.h"
 #include "NumTTT_Classes.h"
+#include "TTC5_Board.h"
+#include "TTC5_UI.h"
 
 using namespace std;
 
@@ -119,4 +121,5 @@ int main() {
 
     return 0;
 }
+
 
