@@ -41,7 +41,19 @@ int main() {
             
         }
         else if (choice == 3) {
-           
+            cout << "=== 5x5 Tic Tac Toe ===" << endl;
+
+            TTC5_Board* board = new TTC5_Board();
+            TTC5_UI* ui = new TTC5_UI();
+            Player<char>** players = ui->setup_players();
+            GameManager<char> gameManager(board, players, ui);
+            gameManager.run();
+
+            delete board;
+            delete ui;
+            delete players[0];
+            delete players[1];
+            delete[] players;
         }
         else if (choice == 4) {
         
@@ -107,3 +119,4 @@ int main() {
 
     return 0;
 }
+
