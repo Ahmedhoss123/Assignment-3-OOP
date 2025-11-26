@@ -12,9 +12,8 @@
 #include "FourByFourUI.h"
 #include "PyramidBoard.h"
 #include "PyramidUI.h"
-
-
-
+#include "WordTTT_Board.h"
+#include "WordTTT_UI.h"
 using namespace std;
 
 int main() {
@@ -175,6 +174,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
