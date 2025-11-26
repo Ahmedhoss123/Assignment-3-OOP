@@ -10,6 +10,9 @@
 #include "TTC5_UI.h"
 #include "FourByFourBoard.h"
 #include "FourByFourUI.h"
+#include "PyramidBoard.h"
+#include "PyramidUI.h"
+
 
 
 using namespace std;
@@ -98,6 +101,21 @@ int main() {
 }
 
         else if (choice == 8) {
+             cout << "=== Pyramid Tic Tac Toe ===" << endl;
+
+    PyramidBoard* board = new PyramidBoard();
+    PyramidUI* ui = new PyramidUI();
+
+    Player<char>** players = ui->setup_players();
+
+    GameManager<char> gameManager(board, players, ui);
+    gameManager.run();
+
+    delete board;
+    delete ui;
+    delete players[0];
+    delete players[1];
+    delete[] players;
             
         }
         else if (choice == 0) {
@@ -139,6 +157,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
