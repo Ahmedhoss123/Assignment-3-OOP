@@ -11,9 +11,13 @@
 #include "FourByFourBoard.h"
 #include "FourByFourUI.h"
 #include "PyramidBoard.h"
-#include "PyramidUI.h"
+#include "PyramidUI.h" 
 #include "WordTTT_Board.h"
 #include "WordTTT_UI.h"
+#include "ObstaclesBoard.h"
+#include "ObstaclesUI.h"
+
+
 using namespace std;
 
 int main() {
@@ -152,6 +156,21 @@ int main() {
             delete[] players;
         }
         else if (choice == 10) {
+             cout << "=== Obstacles Tic Tac Toe ===\n";
+
+    ObstaclesBoard* board = new ObstaclesBoard();
+    ObstaclesUI* ui = new ObstaclesUI();
+
+    Player<char>** players = ui->setup_players();
+
+    GameManager<char> game(board, players, ui);
+    game.run();
+
+    delete board;
+    delete ui;
+    delete players[0];
+    delete players[1];
+    delete[] players;
             
         }
         else if (choice == 11) {
@@ -174,6 +193,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
