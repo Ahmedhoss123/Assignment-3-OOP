@@ -16,6 +16,9 @@
 #include "WordTTT_UI.h"
 #include "ObstaclesBoard.h"
 #include "ObstaclesUI.h"
+#include "SUS_Classes.h"
+#include "XO4R_Classes.h"
+#include "InfinityTTT_Classes.h"
 
 
 using namespace std;
@@ -46,10 +49,18 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            
+            SUS_UI ui;
+            Player<char>** players = ui.setup_players();
+            SUS_Board board;
+            GameManager<char> game(&board, players, &ui);
+            game.run();
         }
         else if (choice == 2) {
-            
+            XO4R_UI ui;
+            Player<char>** players = ui.setup_players();
+            XO4R_Board board;
+            GameManager<char> game(&board, players, &ui);
+            game.run();
         }
         else if (choice == 3) {
             cout << "=== 5x5 Tic Tac Toe ===" << endl;
@@ -174,7 +185,11 @@ int main() {
             
         }
         else if (choice == 11) {
-        
+            InfinityTTT_UI ui;
+            Player<char>** players = ui.setup_players();
+            InfinityTTT_Board board;
+            GameManager<char> game(&board, players, &ui);
+            game.run();
         }
         else if (choice == 12) {
         
@@ -193,6 +208,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
