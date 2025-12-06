@@ -7,6 +7,8 @@ FourByFourBoard::FourByFourBoard() : Board<char>(4,4) {
 
     for(int j=0;j<4;j++) board[0][j] = 'X';
     for(int j=0;j<4;j++) board[3][j] = 'O';
+
+    n_moves = 0;   // ✅ تهيئة العداد
 }
 
 bool FourByFourBoard::update_board(Move<char>* move) {
@@ -34,25 +36,46 @@ bool FourByFourBoard::is_win(Player<char>* p) {
 
     for(int r=0;r<4;r++)
         for(int c=0;c<=1;c++)
-            if(board[r][c]==s && board[r][c+1]==s && board[r][c+2]==s) return true;
+            if(board[r][c]==s && board[r][c+1]==s && board[r][c+2]==s)
+                return true;
 
     for(int c=0;c<4;c++)
         for(int r=0;r<=1;r++)
-            if(board[r][c]==s && board[r+1][c]==s && board[r+2][c]==s) return true;
+            if(board[r][c]==s && board[r+1][c]==s && board[r+2][c]==s)
+                return true;
 
     for(int r=0;r<=1;r++)
         for(int c=0;c<=1;c++)
-            if(board[r][c]==s && board[r+1][c+1]==s && board[r+2][c+2]==s) return true;
+            if(board[r][c]==s && board[r+1][c+1]==s && board[r+2][c+2]==s)
+                return true;
 
     for(int r=0;r<=1;r++)
         for(int c=2;c<4;c++)
-            if(board[r][c]==s && board[r+1][c-1]==s && board[r+2][c-2]==s) return true;
+            if(board[r][c]==s && board[r+1][c-1]==s && board[r+2][c-2]==s)
+                return true;
 
     return false;
 }
 
-bool FourByFourBoard::is_lose(Player<char>*) { return false; }
-bool FourByFourBoard::is_draw(Player<char>*) { return n_moves > 60; }
+bool FourByFourBoard::is_lose(Player<char>*) {
+    return false;
+}
+
+bool FourByFourBoard::is_draw(Player<char>*) {
+    return n_moves > 60;
+}
+
 bool FourByFourBoard::game_is_over(Player<char>* p) {
     return is_win(p) || is_draw(p);
+}
+
+void FourByFourBoard::undo_move(FourByFourMove<char>* m)
+    {
+    int sx = m->get_x(),  sy = m->get_y();
+    int dx = m->get_dst_x(), dy = m->get_dst_y();
+    char s  = m->get_symbol();
+
+    board[dx][dy] = '.';
+    board[sx][sy] = s;
+    n_moves--;
 }
