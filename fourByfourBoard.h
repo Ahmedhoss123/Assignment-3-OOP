@@ -13,6 +13,7 @@ public:
     bool is_lose(Player<char>* p) override;
     bool is_draw(Player<char>* p) override;
     bool game_is_over(Player<char>* p) override;
+    void undo_move(FourByFourMove<char>* m);
 };
 
 #endif
