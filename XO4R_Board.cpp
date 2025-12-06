@@ -17,17 +17,16 @@ bool XO4R_Board::update_board(Move<char>* move) {
     int c = move->get_y();
     char mark = move->get_symbol();
 
-	col = c;
+    col = c;
 
-    // Validate move and apply if valid
     if ((r >= 0 && r < rows && c >= 0 && c < columns) &&
         (board[r][c] == blank_symbol || mark == 0)) {
 
-        if (mark == 0 && r != 5) { // Undo move
+        if (mark == 0 && r != 5) {
             n_moves--;
             board[r][c] = blank_symbol;
         }
-        else if (r == 5 || (r + 1 < rows && board[r + 1][c] != blank_symbol)) {         // Apply move
+        else if (r == 5 || (r + 1 < rows && board[r + 1][c] != blank_symbol)) {
             n_moves++;
             board[r][c] = toupper(mark);
         } 
@@ -37,55 +36,68 @@ bool XO4R_Board::update_board(Move<char>* move) {
 }
 
 bool XO4R_Board::is_win(Player<char>* player) {
-    const char sym = player->get_symbol();
+    return is_win_symbol(player->get_symbol());
+}
+
+/* ===================== NEW ===================== */
+
+vector<int> XO4R_Board::get_valid_columns() {
+    vector<int> valid_cols;
+    for (int c = 0; c < columns; c++) {
+        if (board[0][c] == blank_symbol)
+            valid_cols.push_back(c);
+    }
+    return valid_cols;
+}
+
+int XO4R_Board::get_next_open_row(int col) {
+    for (int r = rows - 1; r >= 0; r--) {
+        if (board[r][col] == blank_symbol)
+            return r;
+    }
+    return -1;
+}
+
+void XO4R_Board::apply_move(int col, char symbol) {
+    int r = get_next_open_row(col);
+    if (r != -1) {
+        board[r][col] = symbol;
+        n_moves++;
+    }
+}
+
+void XO4R_Board::undo_move(int col) {
+    for (int r = 0; r < rows; r++) {
+        if (board[r][col] != blank_symbol) {
+            board[r][col] = blank_symbol;
+            n_moves--;
+            break;
+        }
+    }
+}
+
+bool XO4R_Board::is_win_symbol(char sym) {
 
     auto all_equal = [&](char a, char b, char c, char d) {
         return a == b && b == c && c == d && a != blank_symbol;
     };
 
-    // Check rows and columns
-    for (int r = 0; r < rows; ++r) {
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < columns; c++) {
 
-        if (col + 3 < columns) {
-            if (all_equal(board[r][col], board[r][col + 1], board[r][col + 2], board[r][col + 3]) && board[r][col] == sym)
+            if (c + 3 < columns && all_equal(board[r][c], board[r][c + 1], board[r][c + 2], board[r][c + 3]) && board[r][c] == sym)
                 return true;
-		}
 
-		if (col - 3 >= 0) {
-            if (all_equal(board[r][col], board[r][col - 1], board[r][col - 2], board[r][col - 3]) && board[r][col] == sym)
+            if (r + 3 < rows && all_equal(board[r][c], board[r + 1][c], board[r + 2][c], board[r + 3][c]) && board[r][c] == sym)
                 return true;
-        }
 
-		if (r + 3 < rows) {
-            if (all_equal(board[r][col], board[r + 1][col], board[r + 2][col], board[r + 3][col]) && board[r][col] == sym)
+            if (r + 3 < rows && c + 3 < columns && all_equal(board[r][c], board[r + 1][c + 1], board[r + 2][c + 2], board[r + 3][c + 3]) && board[r][c] == sym)
+                return true;
+
+            if (r + 3 < rows && c - 3 >= 0 && all_equal(board[r][c], board[r + 1][c - 1], board[r + 2][c - 2], board[r + 3][c - 3]) && board[r][c] == sym)
                 return true;
         }
-
-		if (r - 3 >= 0) {
-            if (all_equal(board[r][col], board[r - 1][col], board[r - 2][col], board[r - 3][col]) && board[r][col] == sym)
-                return true;
-        }
-
-		if (r + 3 < rows && col + 3 < columns) {
-            if (all_equal(board[r][col], board[r + 1][col + 1], board[r + 2][col + 2], board[r + 3][col + 3]) && board[r][col] == sym)
-                return true;
-        }
-
-        if (r - 3 >= 0 && col - 3 >= 0) {
-            if (all_equal(board[r][col], board[r - 1][col - 1], board[r - 2][col - 2], board[r - 3][col - 3]) && board[r][col] == sym)
-                return true;
-		}
-
-        if (r + 3 < rows && col - 3 >= 0) {
-            if (all_equal(board[r][col], board[r + 1][col - 1], board[r + 2][col - 2], board[r + 3][col - 3]) && board[r][col] == sym)
-                return true;
-        }
-        if (r - 3 >= 0 && col + 3 < columns) {
-            if (all_equal(board[r][col], board[r - 1][col + 1], board[r - 2][col + 2], board[r - 3][col + 3]) && board[r][col] == sym)
-                return true;
-        }
-	}
-
+    }
     return false;
 }
 
