@@ -14,8 +14,6 @@ Move<char>* TTC5_UI::get_move(Player<char>* player) {
         return new Move<char>(x, y, player->get_symbol());
     }
     else {
-        // Computer player - random move
-        // You can enhance this with AI later
         int x, y;
         Board<char>* board = player->get_board_ptr();
         auto board_matrix = board->get_board_matrix();
