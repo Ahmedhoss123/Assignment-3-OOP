@@ -194,7 +194,7 @@ int main() {
             GameManager<char> game(&board, players, &ui);
             game.run();
             delete[] players;
-}
+        }
         else if (choice == 12) {
             cout << "=== Ultimate Tic-Tac-Toe ===\n";
             UltimateTTT_UI ui;
@@ -203,7 +203,7 @@ int main() {
             GameManager<char> game(&board, players, &ui);
             game.run();
             delete[] players;
-            }
+        }
        
 
         else if (choice == 13) {
@@ -224,6 +224,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
