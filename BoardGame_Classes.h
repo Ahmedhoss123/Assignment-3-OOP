@@ -49,7 +49,8 @@ public:
      * @brief Construct a board with given dimensions.
      */
     Board(int rows, int columns)
-        : rows(rows), columns(columns), board(rows, vector<T>(columns)) {}
+        : rows(rows), columns(columns), board(rows, vector<T>(columns)) {
+    }
 
     /**
      * @brief Virtual destructor. Frees allocated board memory.
@@ -126,7 +127,7 @@ class Player {
 protected:
     string name;         ///< Player name
     PlayerType type;     ///< Player type (e.g., HUMAN or COMPUTER)
-    T symbol;            ///< Player’s symbol on board
+    T symbol;            ///< Player�s symbol on board
     Board<T>* boardPtr;  ///< Pointer to the game board
 
 public:
@@ -134,7 +135,8 @@ public:
      * @brief Construct a player with name, symbol, and type.
      */
     Player(string n, T s, PlayerType t)
-        : name(n), symbol(s), type(t), boardPtr(nullptr) {}
+        : name(n), symbol(s), type(t), boardPtr(nullptr) {
+    }
 
     virtual ~Player() {}
 
@@ -319,4 +321,3 @@ Player<T>** UI<T>::setup_players() {
 }
 
 #endif // _BOARDGAME_CLASSES_H
-
