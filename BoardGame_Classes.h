@@ -78,7 +78,7 @@ public:
     /**
      * @brief Return a copy of the current board as a 2D vector.
      */
-    vector<vector<T>> get_board_matrix() const {
+    virtual vector<vector<T>> get_board_matrix() const {
         return board;
     }
 
@@ -126,7 +126,7 @@ class Player {
 protected:
     string name;         ///< Player name
     PlayerType type;     ///< Player type (e.g., HUMAN or COMPUTER)
-    T symbol;            ///< Player’s symbol on board
+    T symbol;            ///< Playerâ€™s symbol on board
     Board<T>* boardPtr;  ///< Pointer to the game board
 
 public:
@@ -319,3 +319,4 @@ Player<T>** UI<T>::setup_players() {
 }
 
 #endif // _BOARDGAME_CLASSES_H
+
