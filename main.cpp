@@ -20,6 +20,8 @@
 #include "XO4R_Classes.h"
 #include "InfinityTTT_Classes.h"
 #include "UltimateTTT_Classes.h"
+#include "MemoryTTT_Board.h"
+#include "MemoryTTT_UI.h"
 
 
 using namespace std;
@@ -205,7 +207,11 @@ int main() {
        
 
         else if (choice == 13) {
-
+            MemoryTTT_UI ui;
+            Player<char>** players = ui.setup_players();
+            MemoryTTT_Board board;
+            GameManager<char> game(&board, players, &ui);
+            game.run();
         }
         else if (choice == 14) {
             cout << "Goodbye!\n";
@@ -218,6 +224,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
