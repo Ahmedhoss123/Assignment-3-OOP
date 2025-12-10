@@ -27,16 +27,18 @@ public:
 
     // Add getter for board access in UI
     char get_cell(int x, int y) const { return board[x][y]; }
+
+    int& get_n_moves_ref() { return n_moves; }
+
+	int get_current_player() const { return current_player; }
 };
 
 class SUS_UI : public UI<char> {
 public:
     SUS_UI();
+    ~SUS_UI() {};
     Player<char>* create_player(string& name, char symbol, PlayerType type) override;
     Move<char>* get_move(Player<char>* player) override;
-
-    // Override setup to not assign X/O symbols since SUS uses S/U
-    Player<char>** setup_players() override;
 
     // Display board using getter instead of direct access
     void display_board(Board<char>* b) {
@@ -48,7 +50,7 @@ public:
             cout << i << "  ";
             for (int j = 0; j < 3; ++j) {
                 char cell = board->get_cell(i, j);  // Use getter method
-                cout << (cell == '.' ? '$' : cell);
+                cout << (cell == '.' ? '.' : cell);
                 if (j < 2) cout << " | ";
             }
             cout << "\n";
@@ -57,6 +59,15 @@ public:
         cout << "\nScore -> Player 1: " << board->get_player1_score()
             << " | Player 2: " << board->get_player2_score() << "\n\n";
     }
+};
+
+class SUS_AI_Player : public Player<char> {
+public:
+    SUS_AI_Player(string name, char symbol)
+        : Player<char>(name, symbol, PlayerType::AI) {}
+
+    // This is the ONLY function the AI uses
+    Move<char>* make_perfect_move(SUS_Board* board);
 };
 
 #endif
