@@ -54,15 +54,27 @@ int main() {
         if (choice == 1) {
             SUS_UI ui;
             Player<char>** players = ui.setup_players();
-            SUS_Board board;
-            GameManager<char> game(&board, players, &ui);
+
+            SUS_Board* board = new SUS_Board();
+            for (int i = 0; i < 2; ++i)
+                players[i]->set_board_ptr(board);
+
+            GameManager<char> game(board, players, &ui);
             game.run();
+
+            delete board;
+            for (int i = 0; i < 2; ++i) delete players[i];
+            delete[] players;
         }
         else if (choice == 2) {
             XO4R_UI ui;
             Player<char>** players = ui.setup_players();
-            XO4R_Board board;
-            GameManager<char> game(&board, players, &ui);
+
+            XO4R_Board* board = new XO4R_Board();
+            for (int i = 0; i < 2; ++i)
+                players[i]->set_board_ptr(board);
+
+            GameManager<char> game(board, players, &ui);
             game.run();
         }
         else if (choice == 3) {
@@ -224,6 +236,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
