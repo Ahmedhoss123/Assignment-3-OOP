@@ -127,7 +127,7 @@ class Player {
 protected:
     string name;         ///< Player name
     PlayerType type;     ///< Player type (e.g., HUMAN or COMPUTER)
-    T symbol;            ///< Player�s symbol on board
+    T symbol;            ///< Players symbol on board
     Board<T>* boardPtr;  ///< Pointer to the game board
 
 public:
@@ -224,8 +224,9 @@ public:
     void display_board_matrix(const vector<vector<T>>& matrix) const {
         if (matrix.empty() || matrix[0].empty()) return;
 
-        int rows = matrix.size();
-        int cols = matrix[0].size();
+        // FIXED: Cast to int to avoid warning C4267
+        int rows = (int)matrix.size();
+        int cols = (int)matrix[0].size();
 
         cout << "\n    ";
         for (int j = 0; j < cols; ++j)
