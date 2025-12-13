@@ -1,61 +1,62 @@
-#include "MisereTTT_Classes.h"
+#include "MisereTTT_Board.h"
 #include <iostream>
+
 using namespace std;
 
-MisereTTT_Board::MisereTTT_Board() {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            board[i][j] = '-';
+MisereTTT_Board::MisereTTT_Board() : Board<char>(3, 3) {
+    for (int i = 0; i < rows; ++i)
+        for (int j = 0; j < columns; ++j)
+            board[i][j] = ' ';
+    n_moves = 0;
 }
 
-void MisereTTT_Board::display_board() {
-    cout << "\nMis¨¨re Tic Tac Toe (Avoid 3 in a row!)\n";
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++)
-            cout << board[i][j] << " ";
-        cout << endl;
+bool MisereTTT_Board::update_board(Move<char>* move) {
+    int x = move->get_x();
+    int y = move->get_y();
+    char sym = move->get_symbol();
+
+    if (x < 0 || x >= rows || y < 0 || y >= columns) {
+        return false;
     }
-}
+    if (board[x][y] != ' ') {
+        return false;
+    }
 
-bool MisereTTT_Board::update_board(int x, int y, char symbol) {
-    if (x < 0 || x > 2 || y < 0 || y > 2) return false;
-    if (board[x][y] != '-') return false;
-    board[x][y] = symbol;
+    board[x][y] = sym;
+    n_moves++;
     return true;
 }
 
-bool MisereTTT_Board::is_full() {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            if (board[i][j] == '-') return false;
-    return true;
+// In Misere, if you get 3 in a row, you LOSE. 
+// So is_win returns false (unless we defined a winning condition for the opponent, 
+// but the GameManager checks is_lose).
+bool MisereTTT_Board::is_win(Player<char>* p) {
+    return false;
 }
 
-bool MisereTTT_Board::is_draw() {
-    return is_full() && !is_winner();
+// Check if given player has 3-in-row -> that player loses
+bool MisereTTT_Board::is_lose(Player<char>* p) {
+    return player_has_three(p->get_symbol());
 }
 
-// ===============================
-// Mis¨¨re: Player LOSES if THEY get 3-in-row
-// So if someone forms a line ¡ú they LOSE ¡ú return true
-// ===============================
-bool MisereTTT_Board::is_winner() {
-    // Check rows
-    for (int i = 0; i < 3; i++)
-        if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '-')
-            return true;
+bool MisereTTT_Board::is_draw(Player<char>* p) {
+    // Draw if board is full and nobody has lost (which implies nobody has won)
+    return (n_moves >= rows * columns && !is_lose(p));
+}
 
-    // Check columns
-    for (int j = 0; j < 3; j++)
-        if (board[0][j] == board[1][j] && board[1][j] == board[2][j] && board[0][j] != '-')
-            return true;
+bool MisereTTT_Board::game_is_over(Player<char>* p) {
+    return is_win(p) || is_lose(p) || is_draw(p);
+}
 
-    // Check diagonals
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '-')
-        return true;
-
-    if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != '-')
-        return true;
-
-    return false;  // No losing condition
+bool MisereTTT_Board::player_has_three(char sym) {
+    // rows
+    for (int i = 0; i < rows; ++i)
+        if (board[i][0] == sym && board[i][1] == sym && board[i][2] == sym) return true;
+    // cols
+    for (int j = 0; j < columns; ++j)
+        if (board[0][j] == sym && board[1][j] == sym && board[2][j] == sym) return true;
+    // diags
+    if (board[0][0] == sym && board[1][1] == sym && board[2][2] == sym) return true;
+    if (board[0][2] == sym && board[1][1] == sym && board[2][0] == sym) return true;
+    return false;
 }
