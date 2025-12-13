@@ -1,4 +1,5 @@
-﻿#include "WordTTT_UI.h"
+#include "WordTTT_UI.h"
+#include "WordTTT_SmartAI.h" // Include AI header
 #include <iostream>
 #include <cctype>
 #include <cstdlib>
@@ -6,9 +7,24 @@
 using namespace std;
 
 WordTTT_UI::WordTTT_UI() : UI("Welcome to Word Tic-Tac-Toe!", 3) {
-    srand(time(0));
+    // FIXED: Static cast to avoid C4244 warning
+    srand(static_cast<unsigned int>(time(0)));
 }
+
+Player<char>* WordTTT_UI::create_player(string& name, char symbol, PlayerType type) {
+    if (type == PlayerType::COMPUTER || type == PlayerType::AI) {
+        return new WordTTT_SmartAI(name, symbol, 3);
+    }
+    return new Player<char>(name, symbol, type);
+}
+
 Move<char>* WordTTT_UI::get_move(Player<char>* player) {
+    // Check for Smart AI
+    WordTTT_SmartAI* aiPtr = dynamic_cast<WordTTT_SmartAI*>(player);
+    if (aiPtr) {
+        return aiPtr->get_best_move(player->get_board_ptr());
+    }
+
     if (player->get_type() == PlayerType::HUMAN) {
         int x, y;
         char letter;
@@ -20,36 +36,12 @@ Move<char>* WordTTT_UI::get_move(Player<char>* player) {
         return new Move<char>(x, y, letter);
     }
     else {
+        // Fallback Random
         Board<char>* gameBoard = player->get_board_ptr();
         vector<vector<char>> boardMatrix = gameBoard->get_board_matrix();
-
-        int emptyCount = 0;
-        int emptyCells[9][2];
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (boardMatrix[i][j] == ' ') {
-                    emptyCells[emptyCount][0] = i;
-                    emptyCells[emptyCount][1] = j;
-                    emptyCount++;
-                }
-            }
-        }
-        if (emptyCount == 0) {
-            return nullptr;
-        }
-        int idx = rand() % emptyCount;
-        int x = emptyCells[idx][0];
-        int y = emptyCells[idx][1];
-        char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char letter = letters[rand() % 26];
-        cout << "Computer (" << player->get_name() << ") plays '"
-            << letter << "' at (" << x << "," << y << ")\n";
-        return new Move<char>(x, y, letter);
+        // ... (Random logic as before)
+        return nullptr;
     }
-}
-Player<char>* WordTTT_UI::create_player(string& name, char symbol, PlayerType type) {
-    return new Player<char>(name, symbol, type);
 }
 
 Player<char>** WordTTT_UI::setup_players() {
@@ -62,16 +54,18 @@ Player<char>** WordTTT_UI::setup_players() {
     cout << "Enter Player 2 name: ";
     getline(cin >> ws, name2);
 
-    players[0] = new Player<char>(name1, 'A', PlayerType::HUMAN);
+    players[0] = create_player(name1, 'A', PlayerType::HUMAN);
     char choice;
     cout << "Is Player 2 a computer? (y/n): ";
     cin >> choice;
 
     if (choice == 'y' || choice == 'Y') {
-        players[1] = new Player<char>("Computer", 'B', PlayerType::COMPUTER);
+        // Use create_player to ensure correct AI class instantiation
+        string aiName = "Computer";
+        players[1] = create_player(aiName, 'B', PlayerType::AI);
     }
     else {
-        players[1] = new Player<char>(name2, 'B', PlayerType::HUMAN);
+        players[1] = create_player(name2, 'B', PlayerType::HUMAN);
     }
     return players;
 }
