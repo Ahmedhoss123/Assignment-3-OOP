@@ -6,22 +6,24 @@ using namespace std;
 SUS_UI::SUS_UI() : UI<char>("=== FCAI SUS Game ===", 3) {}
 
 Player<char>* SUS_UI::create_player(string& name, char symbol, PlayerType type) {
-    if (type == PlayerType::AI) {
+    // Fix: Check for both AI and COMPUTER types
+    if (type == PlayerType::AI || type == PlayerType::COMPUTER) {
         cout << "Perfect Unbeatable AI activated!\n";
+        // This constructor sets the internal type to PlayerType::AI
         return new SUS_AI_Player(name, symbol);
     }
     return new Player<char>(name, symbol, type);
 }
 
 Move<char>* SUS_UI::get_move(Player<char>* player) {
-    // Special case: Perfect AI player
+    // Special case: Perfect AI player (type is AI because SUS_AI_Player sets it)
     if (player->get_type() == PlayerType::AI) {
         SUS_AI_Player* ai = static_cast<SUS_AI_Player*>(player);
         SUS_Board* board = static_cast<SUS_Board*>(player->get_board_ptr());
         return ai->make_perfect_move(board);
     }
 
-    // Human or Random
+    // Human or Random (Fallback)
     int x, y;
     char choice;
     if (player->get_type() == PlayerType::HUMAN) {
@@ -37,8 +39,8 @@ Move<char>* SUS_UI::get_move(Player<char>* player) {
             y = rand() % 3;
         } while (b[x][y] != '.');
         choice = (rand() % 2 == 0) ? 'S' : 'U';
-		cout << "\nRandom computer plays: " << choice << " " << x << " " << y << endl;
+        cout << "\nRandom computer plays: " << choice << " " << x << " " << y << endl;
     }
 
-	return new Move<char>(x, y, choice);
+    return new Move<char>(x, y, choice);
 }
