@@ -1,339 +1,316 @@
-# 🎮 FCAI Game Hub - The Ultimate Tic-Tac-Toe Collection
+# FCAI Game Hub
 
-[![C++](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Cross--Platform-green.svg)]()
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
+[![Platform](https://img.shields.io/badge/platform-console-lightgrey)](#getting-started)
+[![Architecture](https://img.shields.io/badge/architecture-object--oriented-blueviolet)](#system-architecture)
+[![Repository](https://img.shields.io/badge/repository-GitHub-181717?logo=github)](https://github.com/Ahmedhoss123/Assignment-3-OOP)
 
-> A comprehensive collection of 14 unique Tic-Tac-Toe variants with intelligent AI opponents! 🤖
+A C++17 console game hub containing **14 playable Tic-Tac-Toe variants**, including classic, numerical, word-based, spatial, memory, and meta-board games. The project applies reusable object-oriented abstractions for boards, players, user interfaces, and game management while supporting human and computer-controlled players.
 
-## 📋 Table of Contents
-- [About](#about)
-- [Game Collection](#game-collection)
-- [Features](#features)
-- [Installation](#installation)
-- [How to Play](#how-to-play)
-- [AI Implementation](#ai-implementation)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
+> **Project status:** Educational console application developed as an FCAI Object-Oriented Programming assignment.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features and Metrics](#key-features-and-metrics)
+- [Game Modes](#game-modes)
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [AI and Algorithms](#ai-and-algorithms)
+- [Known Limitations](#known-limitations)
 - [Contributing](#contributing)
 - [License](#license)
-- [Credits](#credits)
 
-## 🎯 About
+## Overview
 
-Welcome to the **FCAI Game Hub** - where Tic-Tac-Toe meets innovation! 🚀 
+FCAI Game Hub provides a single menu-driven interface for exploring multiple implementations of Tic-Tac-Toe and related board-game mechanics. Instead of building each game as an isolated program, the codebase shares common abstractions for game state, players, moves, user interaction, and the game loop.
 
-This project showcases 14 different variants of the classic Tic-Tac-Toe game, each with unique rules and mechanics. Built using **Object-Oriented Programming** principles in C++, this collection features sophisticated AI opponents powered by **Minimax algorithms** with **Alpha-Beta pruning** for an unbeatable gaming experience!
+The result is a compact learning project that demonstrates how polymorphism, templates, composition, and game-specific rule implementations can be combined to support substantially different games behind a consistent runtime flow.
 
-Perfect for:
-- 🎓 Learning game AI algorithms
-- 💻 Understanding OOP design patterns
-- 🎲 Having endless fun with friends (or crushing them with AI)
-- 🧠 Challenging your strategic thinking
+## Key Features and Metrics
 
-## 🎲 Game Collection
+- **14 game modes** available from the main console menu.
+- **Human-versus-human and human-versus-computer** setup flows where supported by each game UI.
+- **Reusable game framework** built around generic `Board<T>`, `Player<T>`, `UI<T>`, and `GameManager<T>` abstractions.
+- **Multiple board models**, including 3×3, 4×4, 5×5, 6×7, pyramid, and nested Ultimate Tic-Tac-Toe layouts.
+- **Specialized rule systems**, including word validation, numerical sum evaluation, moving pieces, hidden information, obstacles, expiring moves, and reverse-win conditions.
+- **AI implementations** using game-specific strategies such as minimax, heuristic evaluation, dictionary lookup, and position-based decision making.
+- **C++17 codebase** with Visual Studio project support for Win32 and x64 Debug/Release configurations.
 
-### 1. Classic Tic-Tac-Toe (X-O) 📐
-The timeless 3×3 grid classic. Simple, elegant, nostalgic!
+### Engineering metrics
 
-### 2. SUS Game 🎯
-Form the word "SUS" on the board. Among Us vibes included! 😄
+| Metric | Value |
+|---|---:|
+| Game modes | **14** |
+| Primary language | **C++** |
+| Language composition | **99.6% C++, 0.4% C** |
+| Standard | **C++17** |
+| Runtime model | **Interactive console application** |
+| External services | **None** |
+| Automated benchmark data | **Not currently published** |
 
-### 3. Four-in-a-Row (Connect 4) 🔴🟡
-The vertical 6×7 classic. Gravity-defying strategy! Features an **unbeatable AI**!
+> Performance claims such as latency, throughput, test coverage, and AI response time are intentionally not stated because the repository does not currently include a benchmark suite or published measurements.
 
-### 4. 5×5 Tic-Tac-Toe 📏
-Bigger board, more possibilities, longer games! Get 3-in-a-row on a 5×5 grid.
+## Game Modes
 
-### 5. Word Tic-Tac-Toe 📝
-Form valid 3-letter words from a dictionary. For the linguistically gifted! 🎓
+| Menu option | Game | Core mechanic |
+|---:|---|---|
+| 0 | Classic Tic-Tac-Toe | Traditional 3×3 X/O gameplay |
+| 1 | SUS | Create the word `SUS` on the board |
+| 2 | Four-in-a-Row | Connect four pieces on a vertical board |
+| 3 | 5×5 Tic-Tac-Toe | Find a three-in-a-row pattern on a larger board |
+| 4 | Word Tic-Tac-Toe | Form valid three-letter words using `dic.txt` |
+| 5 | Misère Tic-Tac-Toe | Avoid forming the winning line |
+| 6 | Diamond Tic-Tac-Toe | Meet the variant's simultaneous line conditions |
+| 7 | 4×4 Moving Tic-Tac-Toe | Place and later move pieces on a 4×4 board |
+| 8 | Pyramid Tic-Tac-Toe | Play on a pyramid-shaped board layout |
+| 9 | Numerical Tic-Tac-Toe | Use numbers whose winning combination sums to 15 |
+| 10 | Obstacles Tic-Tac-Toe | Play around dynamically introduced obstacles |
+| 11 | Infinity Tic-Tac-Toe | Older moves expire as new moves are made |
+| 12 | Ultimate Tic-Tac-Toe | Play a 3×3 board of smaller Tic-Tac-Toe boards |
+| 13 | Memory Tic-Tac-Toe | Play with hidden board information |
+| 14 | Exit | Close the application |
 
-### 6. Misère Tic-Tac-Toe 🔄
-Reverse psychology edition - **AVOID** getting 3-in-a-row to win!
+## System Architecture
 
-### 7. Diamond Tic-Tac-Toe 💎
-Win by forming both a 3-line AND a 4-line simultaneously. Mind-bending! 🤯
+The application follows a reusable, object-oriented game-engine structure:
 
-### 8. 4×4 Moving Tic-Tac-Toe ♟️
-Chess meets Tic-Tac-Toe! Move your pieces strategically after placement.
+```text
+                    +-------------------+
+                    |     main.cpp      |
+                    |  Menu / Launcher   |
+                    +---------+---------+
+                              |
+              selects a game and creates its components
+                              |
+       +----------------------+----------------------+
+       |                      |                      |
++------v------+        +------v------+        +------v------+
+| Game UI     |        | Game Board  |        | Players     |
+| UI<T>       |        | Board<T>    |        | Player<T>   |
++------+------+        +------+------+        +------+------+ 
+       |                      |                      |
+       +----------------------+----------------------+
+                              |
+                    +---------v---------+
+                    |  GameManager<T>   |
+                    | turn loop / state |
+                    +-------------------+
+```
 
-### 9. Numerical Tic-Tac-Toe ➕
-Odd vs Even numbers. Get three numbers that sum to **15**. Math nerds unite! 🤓
+### Design principles
 
-### 10. Obstacles Tic-Tac-Toe 🚧
-Random obstacles appear every 2 moves. Adapt or perish!
+- **Template-based reuse:** Core classes are parameterized by the board cell type, allowing character-based and integer-based games to share the same framework.
+- **Polymorphism:** Each game supplies its own board rules, move validation, win detection, and UI behavior through specialized classes.
+- **Separation of concerns:** Board state, player behavior, user interaction, and game orchestration are kept in separate components.
+- **Strategy-oriented AI:** Computer players can implement different decision strategies without changing the generic game loop.
+- **Composition:** `main.cpp` assembles the appropriate UI, board, players, and `GameManager` for the selected mode.
 
-### 11. Infinity Tic-Tac-Toe ♾️
-Only your last 3 moves remain on the board. Memory challenge activated! 🧠
+## Tech Stack
 
-### 12. Ultimate Tic-Tac-Toe 🎯🎯
-Meta-gaming: A 3×3 grid of 3×3 Tic-Tac-Toe boards. Inception vibes! 🌀
+| Area | Technology |
+|---|---|
+| Language | C++17 |
+| Paradigm | Object-oriented programming and generic programming |
+| Interface | Interactive terminal/console UI |
+| Build tooling | Microsoft Visual Studio solution/project; compiler command line also possible |
+| Compiler target | Visual C++ toolset v143 in the supplied project configuration |
+| Algorithms | Minimax, heuristic evaluation, depth-first search, rule-based validation |
+| Data structures | Vectors, arrays, dynamic allocations, sets/dictionary lookups |
+| Data file | `dic.txt` for Word Tic-Tac-Toe vocabulary |
 
-### 13. Memory Tic-Tac-Toe 🙈
-Your moves are hidden! Play blind and trust your memory.
+## Repository Structure
 
-### 14. Pyramid Tic-Tac-Toe 🔺
-Triangular board layout. Get 3-in-a-row on the pyramid!
+```text
+Assignment-3-OOP/
+├── main.cpp                    # Main menu and game selection
+├── BoardGame_Classes.h         # Generic Board, Player, UI, and GameManager types
+├── XO_Classes.*                # Classic Tic-Tac-Toe
+├── SUS_*                       # SUS game
+├── XO4R_*                      # Four-in-a-Row
+├── TTC5_*                     # 5×5 Tic-Tac-Toe
+├── WordTTT_*                  # Word Tic-Tac-Toe and dictionary-aware AI
+├── MisereTTT_*                # Misère Tic-Tac-Toe
+├── DiamondTTT_*               # Diamond Tic-Tac-Toe
+├── FourByFour*                # 4×4 moving Tic-Tac-Toe
+├── Pyramid*                   # Pyramid Tic-Tac-Toe
+├── NumTTT_*                  # Numerical Tic-Tac-Toe
+├── Obstacles*                # Obstacles Tic-Tac-Toe
+├── InfinityTTT_*             # Infinity Tic-Tac-Toe
+├── UltimateTTT_*             # Ultimate Tic-Tac-Toe
+├── MemoryTTT_*               # Memory Tic-Tac-Toe
+├── AIPlayer*                 # AI player implementations
+├── dic.txt                   # Word-game dictionary
+├── Ass3.sln                  # Visual Studio solution
+├── Ass3.vcxproj              # Visual Studio project
+└── README.md
+```
 
-## ✨ Features
-
-- 🎮 **14 Unique Game Modes** - Never get bored!
-- 🤖 **Smart AI Opponents** - Minimax with Alpha-Beta pruning
-- 👥 **Multiplayer Support** - Human vs Human or Human vs AI
-- 🎨 **Clean Console Interface** - Easy to navigate menu system
-- 🏗️ **OOP Architecture** - Modular, extensible, maintainable
-- 📚 **Dictionary Support** - For Word Tic-Tac-Toe (dic.txt included)
-- 🧠 **Multiple Difficulty Levels** - Some games feature adjustable AI difficulty
-- 🔄 **Move Validation** - No cheating allowed! 😤
-- 🏆 **Win Detection** - Automatic game state evaluation
-
-## 🚀 Installation
+## Getting Started
 
 ### Prerequisites
-- C++17 compatible compiler (g++, clang++, MSVC)
-- Standard C++ libraries
 
-### Steps
+Choose one of the following development environments:
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/Assignment-3-OOP.git
-   cd Assignment-3-OOP
-   ```
+- **Windows:** Visual Studio 2022 with the Desktop development with C++ workload.
+- **Cross-platform:** A C++17-compatible compiler such as GCC or Clang.
+- A terminal capable of reading standard input and displaying standard output.
 
-2. **Compile the project**
-   ```bash
-   g++ -std=c++17 main.cpp XO_Classes.cpp SUS_Board.cpp SUS_UI.cpp XO4R_Board.cpp XO4R_UI.cpp TTC5_Board.cpp TTC5_UI.cpp AIPlayer3.cpp WordTTT_Board.cpp WordTTT_UI.cpp WordTTT_SmartAI.cpp MisereTTT_Board.cpp DiamondTTT_Board.cpp DiamondTTT_UI.cpp FourByFourBoard.cpp FourByFourUI.cpp AIPlayer.cpp PyramidBoard.cpp PyramidUI.cpp NumTTT_Board.cpp NumTTT_UI.cpp ObstaclesBoard.cpp ObstaclesUI.cpp InfinityTTT_Board.cpp InfinityTTT_UI.cpp UltimateTTT_Board.cpp UltimateTTT_UI.cpp MemoryTTT_Board.cpp MemoryTTT_UI.cpp -o game_hub
-   ```
+No database, network service, package manager, or environment variables are required.
 
-3. **Run the game**
-   ```bash
-   ./game_hub
-   ```
+### 1. Clone the repository
 
-## 🎮 How to Play
-
-1. **Launch the game** and you'll see the main menu
-2. **Select a game** by entering the corresponding number (0-14)
-3. **Enter player names** when prompted
-4. **Choose player types**:
-   - `1` for Human player 👤
-   - `2` for Computer/AI player 🤖
-5. **Follow the game-specific instructions**
-6. **Make your moves** by entering coordinates when it's your turn
-7. **Win, lose, or draw!** 🏆
-
-### Example Gameplay
+```bash
+git clone https://github.com/Ahmedhoss123/Assignment-3-OOP.git
+cd Assignment-3-OOP
 ```
+
+### 2. Build with Visual Studio
+
+1. Open `Ass3.sln` in Visual Studio 2022.
+2. Select `Debug` or `Release`.
+3. Select `x64` or `Win32`.
+4. Build the solution with **Build → Build Solution**.
+5. Run the console application with **Debug → Start Without Debugging**.
+
+The supplied project targets the Visual C++ `v143` toolset and defines both Win32 and x64 configurations.
+
+### 3. Build from the command line
+
+The repository is a multi-file C++ application. A command-line build must compile the source files required by `main.cpp` and link them into one executable. For GCC or Clang, use a command similar to the following and adjust the source list if your compiler reports missing or unused translation units:
+
+```bash
+g++ -std=c++17 -O2 -Wall -Wextra \
+  main.cpp \
+  AIPlayer.cpp AIPlayer3.cpp \
+  DiamondTTT_Board.cpp DiamondTTT_UI.Cpp \
+  FourByFourBoard.cpp FourByFourUI.cpp \
+  InfinityTTT_Board.cpp InfinityTTT_UI.cpp \
+  MemoryTTT_Board.cpp MemoryTTT_UI.cpp \
+  MisereTTT_Board.cpp \
+  NumTTT_Board.cpp NumTTT_UI.cpp \
+  ObstaclesBoard.cpp ObstaclesUI.cpp \
+  PyramidBoard.cpp PyramidUI.cpp \
+  SUS_Board.cpp SUS_UI.cpp \
+  TTC5_Board.cpp TTC5_UI.cpp \
+  UltimateTTT_Board.cpp UltimateTTT_UI.cpp \
+  WordTTT_Board.cpp WordTTT_SmartAI.cpp WordTTT_UI.cpp \
+  XO4R_Board.cpp XO4R_UI.cpp \
+  XO_Classes.cpp \
+  -o game_hub
+```
+
+Run the executable with:
+
+```bash
+./game_hub
+```
+
+On Windows using MinGW, run `game_hub.exe` instead.
+
+> **Build note:** Source filenames are case-sensitive on Linux and macOS. In particular, preserve the repository's `DiamondTTT_UI.Cpp` filename exactly when building on a case-sensitive filesystem. The Visual Studio project is the recommended build path on Windows.
+
+## Usage
+
+Start the application and select a mode from the main menu:
+
+```text
 =============================
- FCAI Game Hub Menu 
+ FCAI Game Hub Menu
 =============================
 0. Classic Tic-Tac-Toe (X-O)
 1. SUS Game
+2. Four-in-a-Row
 ...
+13. Memory Tic-Tac-Toe
 14. Exit
 =============================
 Enter your choice: 0
+```
 
+For supported modes, the setup flow generally asks for:
+
+1. Player names.
+2. Player type: human or computer.
+3. Game-specific moves, such as coordinates, columns, numbers, or letters.
+
+Example session:
+
+```text
+Enter your choice: 0
 Enter Player X name: Alice
 Choose Player X type:
 1. Human
 2. Computer
 1
-
 Enter Player O name: Bob
 Choose Player O type:
 1. Human
 2. Computer
 2
-
-[Game starts...]
 ```
 
-## 🧠 AI Implementation
+The exact move format is displayed by the selected game UI because each variant has different board dimensions and rules.
 
-Our AI opponents use state-of-the-art game theory algorithms:
+## AI and Algorithms
 
-### Minimax Algorithm 🎯
-- **Exhaustive search** of game tree
-- **Optimal move selection** at each turn
-- **Depth-limited** for performance optimization
+The repository contains several game-specific computer-player implementations rather than one universal AI. Depending on the selected mode, the implementation may use:
 
-### Alpha-Beta Pruning ✂️
-- **Reduces computation** by eliminating branches
-- **Faster decision making** without sacrificing accuracy
-- **Dynamic evaluation** of board positions
+- **Minimax search** for evaluating future game states.
+- **Alpha-beta pruning** to reduce unnecessary branches during search.
+- **Heuristic evaluation** for larger or more complex boards.
+- **Position-based strategies** for prioritizing useful cells or moves.
+- **Dictionary lookup** and word validation for Word Tic-Tac-Toe.
+- **Variant-specific rule logic** for numerical, moving, reverse-win, and meta-board games.
 
-### Game-Specific Heuristics 🎲
-- **Position weighting** (center, corners, edges)
-- **Pattern recognition** (potential wins/blocks)
-- **Strategic move prioritization**
+AI difficulty and response time depend on the selected game and the current board state. The repository does not currently publish formal timing benchmarks.
 
-### AI Features by Game
-| Game | AI Type | Difficulty |
-|------|---------|-----------|
-| Classic X-O | Random | Easy |
-| SUS | Perfect Minimax | Unbeatable 🔥 |
-| Connect 4 | Perfect Minimax | Unbeatable 🔥 |
-| 5×5 TTT | Strategic Heuristic | Hard |
-| Word TTT | Dictionary + Minimax | Hard |
-| Misère | Reverse Logic | Hard |
-| Diamond | Deep Search | Medium |
-| 4×4 Moving | Position Eval | Medium |
-| Pyramid | Minimax | Hard |
+## Known Limitations
 
-## 📁 Project Structure
+- This is a console application; there is no graphical interface or network multiplayer mode.
+- Some AI searches may take longer on complex positions.
+- Terminal screen-clearing behavior can vary between operating systems and shells.
+- The repository does not currently include an automated test suite or CI workflow.
+- The repository does not currently include a license file, despite earlier documentation referring to MIT licensing.
+- The Visual Studio project configuration may require source-file review when adding or building every game variant; verify the project file includes all translation units needed by your selected configuration.
 
-```
-Assignment-3-OOP/
-├── 📄 main.cpp                      # Main menu and game launcher
-├── 📚 BoardGame_Classes.h           # Base classes (Board, Player, UI, GameManager)
-│
-├── 🎮 Game Implementations/
-│   ├── XO_Classes.{h,cpp}           # Classic Tic-Tac-Toe
-│   ├── SUS_Classes.{h,cpp}          # SUS Game
-│   ├── XO4R_Classes.{h,cpp}         # Four-in-a-Row
-│   ├── TTC5_Board.{h,cpp}           # 5×5 Tic-Tac-Toe
-│   ├── WordTTT_*.{h,cpp}            # Word Tic-Tac-Toe
-│   ├── MisereTTT_*.{h,cpp}          # Misère variant
-│   ├── DiamondTTT_*.{h,cpp}         # Diamond variant
-│   ├── FourByFour*.{h,cpp}          # 4×4 Moving variant
-│   ├── PyramidBoard.{h,cpp}         # Pyramid variant
-│   ├── NumTTT_*.{h,cpp}             # Numerical variant
-│   ├── ObstaclesBoard.{h,cpp}       # Obstacles variant
-│   ├── InfinityTTT_*.{h,cpp}        # Infinity variant
-│   ├── UltimateTTT_*.{h,cpp}        # Ultimate variant
-│   └── MemoryTTT_*.{h,cpp}          # Memory variant
-│
-├── 🤖 AI Implementations/
-│   ├── AIPlayer.{h,cpp}             # 4×4 Moving AI
-│   ├── AIPlayer3.{h,cpp}            # 5×5 TTT AI
-│   └── WordTTT_SmartAI.{h,cpp}      # Word TTT AI
-│
-├── 📖 dic.txt                       # Dictionary for Word Tic-Tac-Toe
-├── 📝 README.md                     # This file!
-└── 📜 LICENSE                       # MIT License
-```
+## Contributing
 
-## 🛠️ Technologies Used
+Contributions and improvements are welcome.
 
-- **Language**: C++17 🔷
-- **Paradigm**: Object-Oriented Programming (OOP)
-- **Design Patterns**: 
-  - Template Method Pattern
-  - Strategy Pattern
-  - Factory Pattern
-- **Algorithms**:
-  - Minimax Algorithm
-  - Alpha-Beta Pruning
-  - Depth-First Search
-  - Heuristic Evaluation Functions
-- **Data Structures**:
-  - 2D Vectors (Board representation)
-  - Hash Sets (Dictionary lookup)
-  - Dynamic Arrays
+1. Fork the repository.
+2. Create a focused branch:
 
-## 🎨 Design Highlights
+   ```bash
+   git checkout -b feature/add-new-variant
+   ```
 
-### Base Class Architecture
-```cpp
-Board<T>       → Game-specific boards
-Player<T>      → Human/AI players
-UI<T>          → User interface handlers
-GameManager<T> → Game loop controller
-```
+3. Make the change while preserving the existing board/player/UI abstractions.
+4. Build the project and manually test the affected game modes.
+5. Commit with a clear message:
 
-### Polymorphism in Action 🎭
-- Virtual functions for game rules
-- Template classes for flexibility
-- Dynamic dispatch for AI behavior
+   ```bash
+   git commit -m "Add new Tic-Tac-Toe variant"
+   ```
 
-## 🤝 Contributing
+6. Push the branch and open a pull request.
 
-Contributions are welcome! 🎉
+For new game modes, include the board rules, move validation, win/draw detection, UI flow, player setup, and any required AI behavior. Please also update this README when adding or renaming a mode.
 
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/AmazingGame`)
-3. **Commit your changes** (`git commit -m 'Add SuperTicTacToe'`)
-4. **Push to the branch** (`git push origin feature/AmazingGame`)
-5. **Open a Pull Request**
+## License
 
-### Ideas for Contribution
-- 🎮 Add new game variants
-- 🤖 Improve AI algorithms
-- 🎨 Add GUI using SFML/SDL
-- 🌐 Implement network multiplayer
-- 📊 Add game statistics tracking
-- 🎵 Add sound effects
+No `LICENSE` file is currently present in the repository, so the project does not yet declare a formal open-source license. Add a license file before distributing the code under specific reuse terms.
 
-## 🐛 Known Issues
+## Credits
 
-- Some AI computations may take time on first move (complexity is high!)
-- Console clearing may not work on all terminals
-- Memory game doesn't persist across sessions
-
-## 📝 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-Free to use, modify, and distribute! Just give credit where it's due. 😊
-
-## 👥 Credits
-
-**Project by**: Abdallah Ahmed  
-**Institution**: FCAI (Faculty of Computers and Artificial Intelligence)  
-**Inspired by**: Dr. El-Ramly's teachings 🎓
-
-### Special Thanks
-- 🙏 Coffee for keeping me awake during debugging sessions
-- 🎮 All the classic board game designers
-- 🤖 The AI/ML community for algorithm inspiration
-- 💻 Stack Overflow (the real MVP)
-
-## 📞 Contact
-
-Have questions, suggestions, or just want to chat about game AI? 
-
-- 📧 Email: [your.email@example.com](mailto:your.email@example.com)
-- 🐙 GitHub: [@yourusername](https://github.com/yourusername)
-- 💬 Open an issue on this repo!
+- **Project:** FCAI Game Hub
+- **Author:** Abdallah Ahmed
+- **Institution:** Faculty of Computers and Artificial Intelligence (FCAI)
+- **Repository:** [Ahmedhoss123/Assignment-3-OOP](https://github.com/Ahmedhoss123/Assignment-3-OOP)
 
 ---
 
-<div align="center">
-
-### 🎮 Ready to Play? Let's Go! 🚀
-
-**Star ⭐ this repo if you enjoyed the games!**
-
-Made with ❤️ and lots of ☕
-
-*"The only winning move is to play!"* 🎯
-
-</div>
-
----
-
-## 🏆 Game Statistics
-
-| Metric | Value |
-|--------|-------|
-| Total Games | 14 🎮 |
-| Lines of Code | ~4000+ 💻 |
-| AI Algorithms | 6 🤖 |
-| Coffee Consumed | ∞ ☕ |
-| Fun Level | Over 9000! 🚀 |
-
-## 🎓 Learning Outcomes
-
-By exploring this project, you'll learn:
-- ✅ Advanced C++ and OOP concepts
-- ✅ Game tree algorithms (Minimax, Alpha-Beta)
-- ✅ Template programming
-- ✅ Design patterns in action
-- ✅ Code organization and modularity
-- ✅ How to build unbeatable AI (Skynet, here we come! 🤖)
-
----
-
-**Happy Gaming! May the best strategy win! 🎊**
+If you find the project useful for learning C++, OOP, or game AI, consider starring the repository. 🎮
